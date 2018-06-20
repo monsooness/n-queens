@@ -78,13 +78,36 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+    // I: number
+    // O: bool
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // create a counter var
+      var count = 0;
+      // loop through the row
+      for (let number of this.rows()[rowIndex]) {
+        // check if element is 1
+        if (number === 1) {
+          // increment counter
+          count++;
+        }
+      }
+      // check if counter is greater or equal to two
+      return count >= 2;
     },
 
     // test if any rows on this board contain conflicts
+    // I: none
+    // O: bool
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // iterate over the matrix
+      for (let i = 0; i < this.rows().length; i++) {
+        // invoke hasRowConflictAt and pass in indices
+        if(this.hasRowConflictAt(i)) {
+          return true;        
+        }
+      }
+      return false;
+      // return false
     },
 
 
