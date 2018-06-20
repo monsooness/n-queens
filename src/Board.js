@@ -116,13 +116,40 @@
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
+    // I: number
+    // O: bool
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // keep track of a count
+      var count = 0;
+      var matrix = this.rows();
+      // loop over each row
+      for (let i = 0; i < matrix.length; i++) {
+        // check if element at the given columnIndex is === 1
+        if (matrix[i][colIndex] === 1) {
+          // increment counter
+          count++;
+        }
+      }
+
+      // return true if counter >= 2
+      return count >= 2;
     },
 
     // test if any columns on this board contain conflicts
+    // I: none
+    // O: bool
     hasAnyColConflicts: function() {
-      return false; // fixme
+      // loop through the columns in the matrx
+      for (let col = 0; col < this.rows().length; col++) {
+        // invoke hasColConflictAt for each column
+        if(this.hasColConflictAt(col)) {
+          // return true
+          return true;
+        }
+      }
+      
+      // return false
+      return false;
     },
 
 
