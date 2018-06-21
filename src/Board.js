@@ -208,7 +208,6 @@
       // create matrix variable
       // debugger;
       var matrix = this.rows();
-      console.log(matrix);
       // create a count
       var count = 0;
       // create column variable
