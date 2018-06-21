@@ -159,12 +159,41 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // counter variable
+      var count = 0;
+      var matrix = this.rows();
+      // column is the input
+      var column = majorDiagonalColumnIndexAtFirstRow;
+      // loop through every row 
+      for (var i = 0; i<matrix.length; i++) {
+        //check if coordinates are equal to one
+        if (matrix[i][column] === 1) {
+          //increment count
+          count++;
+        }
+        //increment row and column
+        column++;
+      }
+      //return true if count > 1
+      return count>1;
+      
     },
 
     // test if any major diagonals on this board contain conflicts
+    //I = none
+    //O = Bool
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var matrix = this.rows();
+      //iterate over every diagonal starting at -n+1
+      for (var i = (-matrix.length+1); i < matrix.length; i++) {
+      // invoke hmdca with the index passed in as arg
+        if (this.hasMajorDiagonalConflictAt(i)) {
+        // return true
+          return true;
+        }
+      }
+      //return false
+      return false;
     },
 
 
@@ -173,13 +202,45 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
+    // I: number
+    // O: bool
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // create matrix variable
+      // debugger;
+      var matrix = this.rows();
+      console.log(matrix);
+      // create a count
+      var count = 0;
+      // create column variable
+      var column = minorDiagonalColumnIndexAtFirstRow;
+      // loop through every row
+      for (let i = 0; i < matrix.length; i++) {
+        // check if the element === 1
+        if (matrix[i][column] === 1) {
+          // increment count
+          count++;
+        }
+        // decrement column
+        column--;
+      }
+      // return true if count > 1
+      return count > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      // create matrix
+      var matrix = this.rows();
+      // iterate over every diagonal starting at 1; stop at n + 2
+      for (let i = 1; i < Math.ceil(matrix.length * 1.5); i++) {
+        // if hmdca returns true
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          // return true
+          return true;
+        }
+      }
+      // return false
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
