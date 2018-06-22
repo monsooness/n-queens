@@ -124,17 +124,92 @@ window.countNRooksSolutions = function(n, board, startRow, startCol) {
 };
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
-window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
 
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+
+window.findNQueensSolution = function(n) {
+  console.log(n);
+  // Create a board
+  var board = new Board({'n':n});
+  //Create a variable to represent the matrix
+  var matrix = board.rows();
+  // Loop through each row
+  var next = 0;
+  for (let i = 0; i<matrix.length; i++) {
+    // Loop through each column
+    for (let j = 0; j < matrix[i].length; j++) {
+      // Toggle put down a queen
+      if (n === 4 && i === 0 && j === 0) {
+        continue;
+      }
+      board.togglePiece(i,j);
+      // Check if allowed
+      if (!board.hasAnyQueensConflicts()) {
+        // break out of the loop
+        console.log(board.rows());
+        break;
+        // Else toggle queen out
+      } else {
+        board.togglePiece(i,j);
+        // if we are at the last column
+        if (j === matrix.length - 1) {
+          //start over again
+        }
+      }
+    }
+  }
+  console.log('Single solution for ' + n + ' queens:', JSON.stringify(matrix));
+  return matrix;
+  //return the matrix     
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
+// I: number
+// O: number
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  if (n === 0) {
+    return 1;
+  }
+  // create a board
+  var board = new Board({'n' : n});
+  // create a matrix variable
+  var matrix = board.rows();
+  // create a count
+  var count = 0;
+  
+  // I: n (dimension), board, starting row
+  // O: a working board
+  // create a recursive function
+  var recursiveHelper = function(n, aBoard, startingRow) {
+    // base case: if number of rows = n
+    // debugger;
+    if (startingRow === n) {
+      // increment the count
+      count++;
+      return;
+    }
+    // loop over columns
+    for (let col = 0; col < n; col++) {
+      // if (col === 1) debugger;
+      // add a queen
+      aBoard.togglePiece(startingRow, col);
+      // check if its ok
+      if(!aBoard.hasAnyQueensConflicts()){
+        // recursively add more queens (n, board, nextrow)
+        recursiveHelper(n, aBoard, startingRow + 1);
+        aBoard.togglePiece(startingRow, col);
+      } else {
+        aBoard.togglePiece(startingRow, col);
+      }
+    }
+  }
+
+  // call recursiveHelper
+  recursiveHelper(n, board, 0);
+  
+  // return count
+  var solutionCount = count;
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
 };
+
